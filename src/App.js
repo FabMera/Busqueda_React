@@ -2,25 +2,30 @@ import { useState } from "react";
 import { BaseColaboradores } from "./components/BaseColaboradores";
 
 function App() {
-  const [colaborador, setColaborador] = useState("");
-  const [correoColaborador, setCorreoColaborador] = useState("");
-  const [busqueda, setBusqueda] = useState([{}]);
-  const [listaColaborador, setlistaColaborador] = useState(BaseColaboradores);
-  const [search, setSearch] = useState("");
+
+  const [colaborador, setColaborador] = useState(""); //estado para el nombre
+  const [correoColaborador, setCorreoColaborador] = useState(""); //estado para el correo
+  const [busqueda, setBusqueda] = useState([{}]); //donde vamos a mostrar el resultado de la busqueda
+  const [listaColaborador, setlistaColaborador] = useState(BaseColaboradores); //archivo importado
+  const [search, setSearch] = useState(""); //barra de busqueda
 
   /* onSubmit */
+
   const sendColaborador = (e) => {
     e.preventDefault();
-    setlistaColaborador([
-      ...listaColaborador,
-      {
-        id: crypto.randomUUID(),
-        nombre: colaborador,
-        correo: correoColaborador,
-      },
-    ]);
+    if (colaborador === "" || correoColaborador === "") {
+      alert("Rellene todos los campos!");
+    } else {
+      setlistaColaborador([
+        ...listaColaborador,
+        {
+          id: crypto.randomUUID(),
+          nombre: colaborador,
+          correo: correoColaborador,
+        },
+      ]);
+    }
   };
-
   /* Eventos Onchange in input */
 
   const nameColaborador = (event) => {
@@ -33,7 +38,6 @@ function App() {
 
   const handleChange = (e) => {
     setSearch(e.target.value);
-    console.log(e.target.value);
     searchColaborador(e.target.value);
   };
 
